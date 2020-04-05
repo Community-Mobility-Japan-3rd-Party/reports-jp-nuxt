@@ -14,7 +14,8 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "nuxt-cookie-control": "^1.8.1"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",
