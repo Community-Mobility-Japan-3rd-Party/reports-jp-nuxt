@@ -2,3 +2,32 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+
+// ==================
+// break-points
+$huge: 1440;
+$large: 1170;
+$medium: 768;
+$small: 600;
+$tiny: 320;
+
+// ==================
+// media-query
+@mixin largerThan($width) {
+  @media screen and (min-width: $width + 1 + px) {
+    @content;
+  }
+}
+
+@mixin smallerThan($width) {
+  @media screen and (max-width: $width + px) {
+    @content;
+  }
+}
+
+// ==================
+// font-size
+@mixin font-size($size, $base: 16) {
+  font-size: $size + px;
+  font-size: ($size / $base) + rem;
+}

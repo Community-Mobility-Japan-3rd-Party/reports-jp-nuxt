@@ -1,5 +1,6 @@
 import { Configuration } from '@nuxt/types';
 import colors from 'vuetify/es5/util/colors';
+const purgecss = require('@fullhuman/postcss-purgecss');
 
 const config: Configuration = {
   mode: 'spa',
@@ -27,7 +28,7 @@ const config: Configuration = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~assets/global.scss'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -39,7 +40,61 @@ const config: Configuration = {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa'],
+  modules: [
+    '@nuxtjs/pwa',
+    [
+      'nuxt-cookie-control',
+      {
+        barPosition: 'bottom-full',
+        blockIframe: true,
+        colors: {
+          barBackground: '#000000e6'
+        }
+      }
+    ],
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: 'UA-162897034-1',
+        config: {
+          anonymize_ip: true,
+          send_page_view: false
+        },
+        debug: true
+      }
+    ],
+    '@nuxtjs/style-resources',
+    'nuxt-purgecss'
+  ],
+  cookies: {
+    necessary: [
+      {
+        name: {
+          ja: '既定のCookie'
+        },
+
+        description: {
+          ja: 'Cookieの制御に使用されます。'
+        },
+        cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies']
+      }
+    ],
+    optional: [
+      {
+        name: {
+          ja: 'Google Analytics'
+        },
+        description: {
+          ja:
+            'Google AnalyticsはGoogleが提供するウェブ分析サービスで、ウェブサイトのトラフィックを追跡・報告します。'
+        },
+        cookies: ['_ga', '_gat_gtag_UA_162897034_1', '_gid'],
+        declined: () => {
+          (window as any)['ga-disable-UA-162897034-1'] = true;
+        }
+      }
+    ]
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -47,7 +102,7 @@ const config: Configuration = {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      // dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -61,6 +116,9 @@ const config: Configuration = {
       }
     }
   },
+  styleResources: {
+    scss: ['~/assets/variables.scss']
+  },
   /*
    ** Build configuration
    */
@@ -68,7 +126,22 @@ const config: Configuration = {
     /*
      ** You can extend webpack config here
      */
-    extend(_config: any, _ctx: any) {}
+    extend(_config: any, _ctx: any) {},
+    postcss: {
+      plugins: [
+        purgecss({
+          content: [
+            './pages/**/*.vue',
+            './layouts/**/*.vue',
+            './components/**/*.vue',
+            './node_modules/vuetify/dist/vuetify.js'
+          ],
+          whitelist: ['html', 'body', 'nuxt-progress'],
+          whitelistPatterns: [/(col|row)/, /cookieControl/],
+          whitelistPatternsChildren: [/cookieControl/]
+        })
+      ]
+    }
   }
 };
 

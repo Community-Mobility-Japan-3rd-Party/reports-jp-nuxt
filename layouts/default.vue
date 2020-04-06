@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -61,6 +61,7 @@
     <v-footer :fixed="fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <CookieControl locale="ja" />
   </v-app>
 </template>
 
@@ -91,3 +92,21 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.cookieControl {
+  &__Bar {
+    &Container {
+      padding: 14px 20px;
+    }
+    p {
+      @include font-size(12);
+    }
+  }
+
+  button {
+    @include font-size(14);
+    padding: 8px 12px;
+  }
+}
+</style>
