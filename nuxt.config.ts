@@ -1,7 +1,7 @@
 import { Configuration } from '@nuxt/types';
 import colors from 'vuetify/es5/util/colors';
+// import purgecss from '@fullhuman/postcss-purgecss';
 import cookieControlConfig from './nuxt-cookie-control.config';
-const purgecss = require('@fullhuman/postcss-purgecss');
 
 const config: Configuration = {
   mode: 'spa',
@@ -75,9 +75,14 @@ const config: Configuration = {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      // dark: true,
+      dark: false,
       themes: {
-        dark: {
+        light: {
+          primary: colors.blueGrey.base,
+          accent: colors.pink.lighten2,
+          secondary: colors.blueGrey.darken4
+        }
+        /* dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
@@ -85,12 +90,23 @@ const config: Configuration = {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
-        }
+        } */
       }
     }
   },
   styleResources: {
     scss: ['~/assets/variables.scss']
+  },
+  '@fullhuman/postcss-purgecss': {
+    content: [
+      './pages/**/*.vue',
+      './layouts/**/*.vue',
+      './components/**/*.vue',
+      './node_modules/vuetify/dist/vuetify.js'
+    ],
+    whitelist: ['html', 'body', 'nuxt-progress'],
+    whitelistPatterns: [/(col|row)/, /cookieControl/],
+    whitelistPatternsChildren: [/cookieControl/]
   },
   /*
    ** Build configuration
@@ -101,19 +117,10 @@ const config: Configuration = {
      */
     extend(_config: any, _ctx: any) {},
     postcss: {
-      plugins: [
+      /* plugins: [
         purgecss({
-          content: [
-            './pages/**/*.vue',
-            './layouts/**/*.vue',
-            './components/**/*.vue',
-            './node_modules/vuetify/dist/vuetify.js'
-          ],
-          whitelist: ['html', 'body', 'nuxt-progress'],
-          whitelistPatterns: [/(col|row)/, /cookieControl/],
-          whitelistPatternsChildren: [/cookieControl/]
         })
-      ]
+      ] */
     }
   }
 };
