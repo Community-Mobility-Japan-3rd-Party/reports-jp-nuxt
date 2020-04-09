@@ -1,5 +1,7 @@
 # reports-jp-nuxt
 
+[![Build Status](https://travis-ci.org/Community-Mobility-Japan-3rd-Party/reports-jp-nuxt.svg?branch=develop)](https://travis-ci.org/Community-Mobility-Japan-3rd-Party/reports-jp-nuxt)
+
 > Description to be written later
 
 ## Build Setup
